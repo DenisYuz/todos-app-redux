@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import TodoForm from './TodoForm';
 import { editTodo, removeTodo } from '../actions/todos';
+import { getTodoById } from '../selectors/todos';
 
 const EditTodoPage = (props) => {
   return (
@@ -23,7 +24,7 @@ const EditTodoPage = (props) => {
 
 const mapStateToProps = (state, props) => {
   return {
-    todo: state.todos.find((todo) => todo.id === props.match.params.id)
+    todo: getTodoById(state,props.match.params.id)
   };
 };
 

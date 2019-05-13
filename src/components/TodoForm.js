@@ -72,7 +72,7 @@ export default class TodoForm extends React.Component {
             value={this.state.amount}
             onChange={this.onAmountChange}
           />
-          <SingleDatePicker className="add-todo__input"
+          <SingleDatePicker
             date={this.state.createdAt}
             onDateChange={this.onDateChange}
             focused={this.state.calendarFocused}

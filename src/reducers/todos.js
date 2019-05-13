@@ -1,14 +1,14 @@
 // todos Reducer
 
-const todosReducerDefaultState = [];
+const todosReducerDefaultState = {};
 
 export default (state = todosReducerDefaultState, action) => {
   switch (action.type) {
     case 'ADD_TODO':
-      return [
+      return {
         ...state,
-        action.todo
-      ];
+        [action.todo.id]: action.todo
+      }
     case 'REMOVE_TODO':
       return state.filter(({ id }) => id !== action.id);
     case 'EDIT_TODO':

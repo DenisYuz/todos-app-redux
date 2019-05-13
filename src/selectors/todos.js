@@ -2,8 +2,12 @@ import moment from 'moment';
 
 // Get visible todos
 
-export default (todos, { text, sortBy, startDate, endDate }) => {
-  return todos.filter((todo) => {
+export const getVisibleTodos =  (state, { text, sortBy, startDate, endDate }) => {
+
+   const todosArray = Object.keys(state.todos).map( (id)=>(state.todos[id]) );
+
+
+  return todosArray.filter((todo) => {
     const createdAtMoment = moment(todo.createdAt);
     const startDateMatch = startDate ? startDate.isSameOrBefore(createdAtMoment, 'day') : true;
     const endDateMatch = endDate ? endDate.isSameOrAfter(createdAtMoment, 'day') : true;
@@ -18,3 +22,8 @@ export default (todos, { text, sortBy, startDate, endDate }) => {
     }
   });
 };
+
+export const getTodoById = (todos, id) => {
+
+   return todos[id];
+}

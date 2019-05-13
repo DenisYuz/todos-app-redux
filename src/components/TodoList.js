@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import TodoListItem from './TodoListItem';
-import selectTodos from '../selectors/todos';
+import {getVisibleTodos} from '../selectors/todos';
 
 const TodoList = (props) => (
   <div>
@@ -14,7 +14,7 @@ const TodoList = (props) => (
 
 const mapStateToProps = (state) => {
   return {
-    todos: selectTodos(state.todos, state.filters)
+    todos: getVisibleTodos(state, state.filters)
   };
 };
 
