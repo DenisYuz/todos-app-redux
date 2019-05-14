@@ -23,7 +23,7 @@ export const getVisibleTodos =  (state, { text, sortBy, startDate, endDate }) =>
   });
 };
 
-export const getTodoById = (todos, id) => {
+export const getTodoById = (state, id) => {
 
-   return todos[id];
+   return state.todos[id];
 }
