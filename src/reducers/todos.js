@@ -10,17 +10,24 @@ export default (state = todosReducerDefaultState, action) => {
         [action.todo.id]: action.todo
       }
     case 'REMOVE_TODO':
-      delete state[action.todo.id];
-      return {...state}
+      let copyOfAllTodos = {...state}
+
+      delete copyOfAllTodos[action.id];
+
+      
+      return copyOfAllTodos;
       //return state.filter(({ id }) => id !== action.id);
     case 'EDIT_TODO':
-     state[action.todo.id] = {
-      [action.todo.id]: action.todo
-    }
-    return {
-      ...state
+     
+     return {
+      ...state,
+      [action.id]:
+       {
+         ...state[action.id],
+          ...action.updates
+      }
     }    
     default:
-      return {...state};
+      return state;
   }
 };

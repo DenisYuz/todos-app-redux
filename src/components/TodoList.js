@@ -14,7 +14,7 @@ const TodoList = (props) => (
 
 const mapStateToProps = (state) => {
   return {
-    todos: getVisibleTodos(state, state.filters)
+    todos: getVisibleTodos(state, state)
   };
 };
 
