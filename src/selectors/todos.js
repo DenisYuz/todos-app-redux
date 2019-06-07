@@ -1,19 +1,49 @@
 import moment from 'moment';
-
+import { createSelector } from 'reselect'
 // Get visible todos
 
-export const getVisibleTodos =  (state, { text, sortBy, startDate, endDate }) => {
-
-   const todosArray = Object.keys(state.todos).map( (id)=>(state.todos[id]) );
 
 
-  return todosArray.filter((todo) => {
-    const createdAtMoment = moment(todo.createdAt);
-    const startDateMatch = startDate ? startDate.isSameOrBefore(createdAtMoment, 'day') : true;
-    const endDateMatch = endDate ? endDate.isSameOrAfter(createdAtMoment, 'day') : true;
-    const textMatch = todo.description.toLowerCase().includes(text.toLowerCase());
+const _getTodosArray = (state) => {  
+  return Object.keys(state.todos).map( (id)=>(state.todos[id]) )
+}
 
-    return startDateMatch && endDateMatch && textMatch;
+const _getTodosFilter = (state) => {
+  return {
+   
+    startDate: state.filters.startDate,
+    endDate: state.filters.endDate,
+    text: state.filters.text
+  }
+}
+
+
+
+
+
+  
+
+  export const getVisibleTodos =  createSelector(
+    [_getTodosArray, _getTodosFilter],
+    
+    (todosArray,todosFilter) => {
+      return todosArray.filter((todo) => {
+          const createdAtMoment = todo.createdAt ? moment(todosFilter.createdAt) : null;
+          const isStartDateMatch = todosFilter.startDate ? todosFilter.startDate.isSameOrBefore(createdAtMoment, 'day') : true;
+          const isEndDateMatch = todosFilter.endDate ? todosFilter.endDate.isSameOrAfter(createdAtMoment, 'day') : true;
+          const isTextMatch = todo.description.toLowerCase().includes(todosFilter.text.toLowerCase());
+        
+          return isStartDateMatch && isEndDateMatch && isTextMatch;
+        })})
+     
+    
+  
+  
+  
+  
+
+  
+/*
   }).sort((a, b) => {
     if (sortBy === 'date') {
       return a.createdAt < b.createdAt ? 1 : -1;
@@ -22,8 +52,13 @@ export const getVisibleTodos =  (state, { text, sortBy, startDate, endDate }) =>
     }
   });
 };
-
+*/
 export const getTodoById = (state, id) => {
 
    return state.todos[id];
 }
+
+
+
+
+
